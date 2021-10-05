@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehicle.Data;
 
 namespace Vehicle.Data.Migrations
 {
     [DbContext(typeof(VehicleMgrContext))]
-    partial class VehicleMgrContextModelSnapshot : ModelSnapshot
+    [Migration("20211005124350_modifyDb")]
+    partial class modifyDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

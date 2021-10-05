@@ -11,7 +11,5 @@ namespace Vehicle.Data.Models
         public int Id { get; set; }
         public string bodyType { get; set; }
         public int Premium { get; set; }
-        public DateTime DateCreated { get; set; }
-
     }
 }

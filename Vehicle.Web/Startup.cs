@@ -9,7 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Vehicle.Core.Mappings;
 using Vehicle.Data;
+using Vehicle.Data.Interface;
+using Vehicle.Data.Repository;
 
 namespace Vehicle.Web
 {
@@ -31,7 +34,11 @@ namespace Vehicle.Web
             });
 
 
+            //Add reference for Automapper to Startup file : saintlaw
+            services.AddAutoMapper(typeof(Maps));
 
+            //Added references for Repository and Contracts to Startup file
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 

@@ -11,6 +11,5 @@ namespace Vehicle.Core.ViewModels
         public int Id { get; set; }
         public string bodyType { get; set; }
         public int Premium { get; set; }
-        public DateTime DateCreated { get; set; }
     }
 }
