@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,20 @@ namespace Vehicle.Web.Controllers
 {
     public class PurchaseController : Controller
     {
-        private readonly IPurchaseRepository purchase;
+        private readonly IPurchaseRepository purchaseRepo;
+        //private readonly IBodyTypeRepository bodyTypeRepo;
+        //private readonly IVehicleDetailsRepository vehicleDetailsRepo;
         private readonly IMapper mapper;
 
         public PurchaseController(IPurchaseRepository _purchase, IMapper _mapper)
         {
-            purchase = _purchase;
+            purchaseRepo = _purchase;
             mapper = _mapper;
         }
 
         public async Task<ActionResult> Index()
         {
-            var purch = await purchase.FindAll();
+            var purch = await purchaseRepo.FindAll();
             var collection = mapper.Map<List<Purchase>, List<PurchaseVM>>(purch.ToList());
             return View(collection);
         }
@@ -32,21 +35,21 @@ namespace Vehicle.Web.Controllers
         // GET: LoginController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var isExist = await purchase.isExist(id);
+            var isExist = await purchaseRepo.isExist(id);
             if (!isExist)
             {
                 return NotFound();
             }
 
-            var purch = await purchase.FindById(id);
+            var purch = await purchaseRepo.FindById(id);
             var collection = mapper.Map<PurchaseVM>(purch);
             return View(collection);
         }
 
         // GET: LoginController/Create
         public ActionResult Create()
-        {
-            return View();
+        {           
+            return View();         
         }
 
         // POST: LoginController/Create
@@ -56,7 +59,7 @@ namespace Vehicle.Web.Controllers
         {
             try
             {
-                //TODO : added insert logic here
+                //TODO: Add insert logic here
                 if (!ModelState.IsValid)
                 {
                     return View(collection);
@@ -64,30 +67,32 @@ namespace Vehicle.Web.Controllers
 
                 var purch = mapper.Map<Purchase>(collection);
                 purch.DateCreated = DateTime.Now;
-                var isSuccess = await purchase.Create(purch);
+
+                var isSuccess = await purchaseRepo.Create(purch);
                 if (!isSuccess)
                 {
-                    ModelState.AddModelError("", "Something Went Wrong...");
+                    ModelState.AddModelError("", "Something Went Wrong....");
                     return View(collection);
                 }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ModelState.AddModelError("", "Something Went Wrong...");
-                return View(collection);
+                ModelState.AddModelError("", "Something Went Wrong....");
+                return View();
             }
         }
 
         // GET: LoginController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var isExist = await purchase.isExist(id);
+            var isExist = await purchaseRepo.isExist(id);
             if (!isExist)
             {
                 return NotFound();
             }
-            var purch = await purchase.FindById(id);
+            var purch = await purchaseRepo.FindById(id);
             var collection = mapper.Map<PurchaseVM>(purch);
             return View(collection);
         }
@@ -104,7 +109,7 @@ namespace Vehicle.Web.Controllers
                     return View(collection);
                 }
                 var purch = mapper.Map<Purchase>(collection);
-                var isSuccess = await purchase.Update(purch);
+                var isSuccess = await purchaseRepo.Update(purch);
                 if (!isSuccess)
                 {
                     ModelState.AddModelError("", "Something Went Wrong...");
@@ -124,13 +129,13 @@ namespace Vehicle.Web.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             //checking if there is any record for that particular Id
-            var purch = await purchase.FindById(id);
+            var purch = await purchaseRepo.FindById(id);
             if (purch == null)
             {
                 return NotFound();
             }
 
-            var isSuccess = await purchase.Delete(purch);
+            var isSuccess = await purchaseRepo.Delete(purch);
             if (!isSuccess)
             {
                 return View();
@@ -146,12 +151,12 @@ namespace Vehicle.Web.Controllers
             try
             {
                 //TODO: Add delete logic here 
-                var purch = await purchase.FindById(id);
+                var purch = await purchaseRepo.FindById(id);
                 if (purch == null)
                 {
                     return NotFound();
                 }
-                var isSuccess = await purchase.Delete(purch);
+                var isSuccess = await purchaseRepo.Delete(purch);
                 if (!isSuccess)
                 {
                     return BadRequest();

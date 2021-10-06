@@ -1,12 +1,10 @@
-﻿@model Vehicle.Core.ViewModels.CreatePurchaseVM
+﻿@model Vehicle.Data.Models.Purchase
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Purchase</h1>
-
-<hr />
+<h4>Purchase</h4>
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Create">
@@ -72,16 +70,26 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Id" class="control-label"></label>
-                        @Html.DropDownListFor(r => r.Id, new SelectList(Model.VehicleMake, "Value", "Text"), "Select Vehicle Make", new { @class = "form-control" })
-                        <span asp-validation-for="Id" class="text-danger"></span>
+                        <label asp-for="VehicleMake" class="control-label"></label>
+                        <select asp-for="VehicleMake" class="form-control">
+                            <option>---Select Vehicle Make---</option>
+                            <option>Toyota</option>
+                            <option>Honda</option>
+                        </select>
+                        <span asp-validation-for="VehicleMake" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Id" class="control-label"></label>
-                        @Html.DropDownListFor(r => r.Id, new SelectList(Model.VehicleModel, "Value", "Text"), "Select Vehicle Model", new { @class = "form-control" })
+                        <label asp-for="VehicleModel" class="control-label"></label>
+                        <select asp-for="VehicleModel" class="form-control">
+                            <option>---Select Vehicle Model---</option>
+                            <option>Corolla</option>
+                            <option>Camry</option>
+                            <option>Accord</option>
+                            <option>Civic</option>
+                        </select>
                         <span asp-validation-for="VehicleModel" class="text-danger"></span>
                     </div>
                 </div>
@@ -91,8 +99,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="Id" class="control-label"></label>
-                        @Html.DropDownListFor(r => r.Id, new SelectList(Model.BodyType, "Value", "Text"), "Select Body Type", new { @class = "form-control" })
+                        <label asp-for="BodyType" class="control-label"></label>
+                        <select asp-for="BodyType" class="form-control">
+                            <option>---Select Body Type---</option>
+                            <option>Car</option>
+                            <option>SUV</option>
+                            <option>Truck</option>
+                            <option>Van</option>
+                        </select>
                         <span asp-validation-for="BodyType" class="text-danger"></span>
                     </div>
                 </div>
@@ -105,15 +119,21 @@
                     </div>
                 </div>
             </div>
-        
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <a class="btn btn-outline-secondary btn-block" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
